@@ -1,6 +1,10 @@
+import { useState } from "react";
 function Header() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   function handleThemeToggle() {
     document.body.classList.toggle("dark-mode");
+    setIsDarkMode(!isDarkMode);
   }
 
   return (
@@ -32,7 +36,7 @@ function Header() {
         </div>
 
         <button id="theme-toggle" type="button" onClick={handleThemeToggle}>
-          Dark Mode: Off
+          Dark Mode: {isDarkMode ? "On" : "Off"}
         </button>
       </div>
     </header>
