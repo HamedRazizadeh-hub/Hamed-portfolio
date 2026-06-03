@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Header from "./components/Header";
 import About from "./components/About";
 import Projects from "./components/Projects";
@@ -29,13 +31,21 @@ const projects = [
 ];
 
 function App() {
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+
   return (
     <>
       <Header />
 
       <main className="container">
         <About />
-        <Projects projects={projects} />
+
+        <Projects
+          projects={projects}
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
+
         <Contact />
       </main>
 

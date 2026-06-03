@@ -35,8 +35,12 @@ function Header() {
           </nav>
         </div>
 
-        <button id="theme-toggle" type="button" onClick={handleThemeToggle}>
-          Dark Mode: {isDarkMode ? "On" : "Off"}
+        <button
+          className="theme-toggle"
+          type="button"
+          onClick={handleThemeToggle}
+        >
+          {isDarkMode ? "Light mode" : "Dark mode"}
         </button>
       </div>
     </header>
