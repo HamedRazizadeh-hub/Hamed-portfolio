@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { NavLink } from "react-router";
+import { useTheme } from "../context/ThemeContext";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive
@@ -7,12 +7,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     : "rounded-full px-4 py-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white";
 
 function Header() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  function handleThemeToggle() {
-    document.documentElement.classList.toggle("dark");
-    setIsDarkMode(!isDarkMode);
-  }
+  const { dark, toggleDark } = useTheme();
 
   return (
     <header className="sticky top-0 z-10 border-b border-white/60 bg-white/80 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
@@ -64,10 +59,10 @@ function Header() {
           <button
             className="w-fit rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:ring-offset-slate-950"
             type="button"
-            onClick={handleThemeToggle}
+            onClick={toggleDark}
             aria-label="Toggle dark mode"
           >
-            {isDarkMode ? "Light mode" : "Dark mode"}
+            {dark ? "Light mode" : "Dark mode"}
           </button>
         </div>
       </div>
