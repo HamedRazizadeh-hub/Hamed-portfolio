@@ -1,39 +1,42 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+
+type ContactFormData = {
+  name: string;
+  email: string;
+  message: string;
+};
 
 export function ContactPage() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
 
-  const [error, setError] = useState("");
+  async function onSubmit(data: ContactFormData) {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    const { name, value } = e.target;
+      console.log("Contact form submitted:", data);
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if (!formData.name || !formData.email || !formData.message) {
-      setError("Please fill in all fields.");
-      return;
+      reset();
+      navigate("/");
+    } catch {
+      setError("root", {
+        message: "Something went wrong. Please try again.",
+      });
     }
-
-    setError("");
-    alert("Message sent!");
-    navigate("/");
   }
 
   return (
@@ -49,15 +52,9 @@ export function ContactPage() {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mx-auto w-full max-w-5xl space-y-6 rounded-3xl bg-white/85 p-8 shadow-lg ring-1 ring-slate-300 backdrop-blur dark:bg-slate-900 dark:ring-slate-800"
       >
-        {error && (
-          <p className="rounded-2xl bg-red-50 p-4 text-center text-sm font-medium text-red-600 ring-1 ring-red-200 dark:bg-red-950 dark:text-red-300 dark:ring-red-900">
-            {error}
-          </p>
-        )}
-
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
             <label
@@ -69,12 +66,27 @@ export function ContactPage() {
 
             <input
               id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-slate-300 bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:border-slate-700 dark:bg-slate-950 dark:text-white"
               type="text"
+              aria-invalid={errors.name ? "true" : "false"}
+              className={`w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
+                errors.name
+                  ? "border-red-500"
+                  : "border-slate-300 dark:border-slate-700"
+              }`}
+              {...register("name", {
+                required: "Name is required.",
+                minLength: {
+                  value: 2,
+                  message: "Name must be at least 2 characters.",
+                },
+              })}
             />
+
+            {errors.name && (
+              <p role="alert" className="mt-1 text-sm text-red-600">
+                {errors.name.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -87,12 +99,27 @@ export function ContactPage() {
 
             <input
               id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-2xl border border-slate-300 bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:border-slate-700 dark:bg-slate-950 dark:text-white"
               type="email"
+              aria-invalid={errors.email ? "true" : "false"}
+              className={`w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
+                errors.email
+                  ? "border-red-500"
+                  : "border-slate-300 dark:border-slate-700"
+              }`}
+              {...register("email", {
+                required: "Email is required.",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Please enter a valid email address.",
+                },
+              })}
             />
+
+            {errors.email && (
+              <p role="alert" className="mt-1 text-sm text-red-600">
+                {errors.email.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -106,19 +133,45 @@ export function ContactPage() {
 
           <textarea
             id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            className="min-h-40 w-full rounded-2xl border border-slate-300 bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+            rows={7}
+            aria-invalid={errors.message ? "true" : "false"}
+            className={`min-h-40 w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
+              errors.message
+                ? "border-red-500"
+                : "border-slate-300 dark:border-slate-700"
+            }`}
+            {...register("message", {
+              required: "Message is required.",
+              minLength: {
+                value: 20,
+                message: "Message must be at least 20 characters.",
+              },
+            })}
           />
+
+          {errors.message && (
+            <p role="alert" className="mt-1 text-sm text-red-600">
+              {errors.message.message}
+            </p>
+          )}
         </div>
+
+        {errors.root && (
+          <p
+            role="alert"
+            className="rounded-2xl bg-red-50 p-4 text-center text-sm font-medium text-red-600 ring-1 ring-red-200 dark:bg-red-950 dark:text-red-300 dark:ring-red-900"
+          >
+            {errors.root.message}
+          </p>
+        )}
 
         <div className="flex justify-center">
           <button
             type="submit"
-            className="rounded-2xl bg-brand px-6 py-3 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 dark:ring-offset-slate-900"
+            disabled={isSubmitting}
+            className="rounded-2xl bg-brand px-6 py-3 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:ring-offset-slate-900"
           >
-            Send message
+            {isSubmitting ? "Sending..." : "Send message"}
           </button>
         </div>
       </form>
