@@ -1,6 +1,8 @@
+import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes } from "react-router";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { SectionError } from "./components/SectionError";
 import { ContactPage } from "./pages/ContactPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -12,10 +14,41 @@ export default function App() {
       <Header />
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+        {/*
+          Each page has its own ErrorBoundary so if one page crashes,
+          only that page shows the fallback message and the rest of the app
+          can still work. Header stays outside the Routes, so users can still
+          navigate even if a page fails. If Header were inside Routes without
+          a boundary, a rendering error could remove the navigation too.
+        */}
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route
+            path="/"
+            element={
+              <ErrorBoundary FallbackComponent={SectionError}>
+                <HomePage />
+              </ErrorBoundary>
+            }
+          />
+
+          <Route
+            path="/projects"
+            element={
+              <ErrorBoundary FallbackComponent={SectionError}>
+                <ProjectsPage />
+              </ErrorBoundary>
+            }
+          />
+
+          <Route
+            path="/contact"
+            element={
+              <ErrorBoundary FallbackComponent={SectionError}>
+                <ContactPage />
+              </ErrorBoundary>
+            }
+          />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
