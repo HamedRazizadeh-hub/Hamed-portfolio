@@ -1,5 +1,7 @@
+import { useEffect, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 type ContactFormData = {
   name: string;
@@ -9,6 +11,11 @@ type ContactFormData = {
 
 export function ContactPage() {
   const navigate = useNavigate();
+
+  useDocumentTitle("Contact — Hamed Razizadeh");
+
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const {
     register,
@@ -24,19 +31,38 @@ export function ContactPage() {
     },
   });
 
-  async function onSubmit(data: ContactFormData) {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+  const { ref: nameRegisterRef, ...nameRegisterRest } = register("name", {
+    required: "Name is required.",
+    minLength: {
+      value: 2,
+      message: "Name must be at least 2 characters.",
+    },
+  });
 
-      console.log("Contact form submitted:", data);
+  const setNameRef = (element: HTMLInputElement | null) => {
+    nameRegisterRef(element);
+    nameRef.current = element;
+  };
 
-      reset();
-      navigate("/");
-    } catch {
-      setError("root", {
-        message: "Something went wrong. Please try again.",
-      });
-    }
+  useEffect(() => {
+    nameRef.current?.focus();
+  }, []);
+
+  function onSubmit(data: ContactFormData) {
+    startTransition(async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        console.log("Contact form submitted:", data);
+
+        reset();
+        navigate("/");
+      } catch {
+        setError("root", {
+          message: "Something went wrong. Please try again.",
+        });
+      }
+    });
   }
 
   return (
@@ -67,19 +93,13 @@ export function ContactPage() {
             <input
               id="name"
               type="text"
-              aria-invalid={errors.name ? "true" : "false"}
               className={`w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
                 errors.name
                   ? "border-red-500"
                   : "border-slate-300 dark:border-slate-700"
               }`}
-              {...register("name", {
-                required: "Name is required.",
-                minLength: {
-                  value: 2,
-                  message: "Name must be at least 2 characters.",
-                },
-              })}
+              ref={setNameRef}
+              {...nameRegisterRest}
             />
 
             {errors.name && (
@@ -100,7 +120,6 @@ export function ContactPage() {
             <input
               id="email"
               type="email"
-              aria-invalid={errors.email ? "true" : "false"}
               className={`w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
                 errors.email
                   ? "border-red-500"
@@ -134,7 +153,6 @@ export function ContactPage() {
           <textarea
             id="message"
             rows={7}
-            aria-invalid={errors.message ? "true" : "false"}
             className={`min-h-40 w-full rounded-2xl border bg-white p-3 text-slate-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:bg-slate-950 dark:text-white ${
               errors.message
                 ? "border-red-500"
@@ -168,10 +186,10 @@ export function ContactPage() {
         <div className="flex justify-center">
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isPending || isSubmitting}
             className="rounded-2xl bg-brand px-6 py-3 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:ring-offset-slate-900"
           >
-            {isSubmitting ? "Sending..." : "Send message"}
+            {isPending || isSubmitting ? "Sending..." : "Send message"}
           </button>
         </div>
       </form>

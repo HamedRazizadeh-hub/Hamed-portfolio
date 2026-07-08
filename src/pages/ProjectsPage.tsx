@@ -1,3 +1,5 @@
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
+
 const projects = [
   {
     title: "Portfolio Website",
@@ -17,6 +19,8 @@ const projects = [
 ];
 
 export function ProjectsPage() {
+  useDocumentTitle("Projects — Hamed Razizadeh");
+
   return (
     <section className="space-y-8">
       <div className="flex flex-col items-center text-center">

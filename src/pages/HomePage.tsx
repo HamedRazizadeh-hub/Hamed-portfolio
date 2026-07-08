@@ -1,4 +1,8 @@
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
+
 export function HomePage() {
+  useDocumentTitle("Home — Hamed Razizadeh");
+
   return (
     <section className="space-y-8">
       <div className="flex flex-col items-center rounded-3xl bg-gradient-to-r from-brand to-indigo-600 px-8 py-12 text-center text-white shadow-xl">
