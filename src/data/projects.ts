@@ -1,0 +1,32 @@
+﻿export const projects = [
+  {
+    title: "JobMatch — Job Search & Application Tracker",
+    context: "Collaborative HackYourFuture final project",
+    description: "A team-built app for job discovery, matching, saved jobs, and application tracking.",
+    contributions: "I contributed frontend application screens, job search and filters, job details, bookmarks, application statuses, profile preferences, matching results, authentication interfaces, and backend API integration.",
+    stackLabel: "Frontend stack",
+    techStack: ["Next.js", "React", "TypeScript", "CSS", "Biome"],
+    repository: "https://github.com/HamedRazizadeh-hub/c55-final-project-group-C",
+    teamRepository: "https://github.com/HackYourFutureProjects/c55-final-project-group-C",
+    demo: "https://c55c.hyf.dev/",
+  },
+  {
+    title: "Football Teams Explorer",
+    context: "Football search app",
+    description: "Search football clubs and national teams by name or country and explore team and stadium details. Includes responsive layouts, dark mode, validation, and loading and error states.",
+    stackLabel: "Stack",
+    techStack: ["React", "TypeScript", "React Router", "Tailwind CSS", "Vite", "API-Football"],
+    repository: "https://github.com/HamedRazizadeh-hub/football-teams-explorer",
+    demo: "https://football-teams-explorer.vercel.app/",
+  },
+  {
+    title: "Cookbook — Recipe Web App",
+    context: "Team project",
+    description: "A team recipe app combining TheMealDB recipes with recipes from our cohort.",
+    contributions: "I contributed TheMealDB API services and routes, localStorage favorites, favorites rendering and modal integration, unit tests, and ingredient sorting.",
+    stackLabel: "Stack",
+    techStack: ["JavaScript", "Vite", "Node.js", "Express", "SQLite", "Vitest"],
+    repository: "https://github.com/HamedRazizadeh-hub/c55-core-project-group-4",
+    demo: "https://c55-core-project-group-4-cookbook.onrender.com/",
+  },
+];

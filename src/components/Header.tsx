@@ -14,7 +14,7 @@ function Header() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <img
-            className="h-20 w-20 rounded-full object-cover shadow-md ring-4 ring-white dark:ring-slate-800"
+            className="h-16 w-16 shrink-0 rounded-full object-cover shadow-md ring-4 ring-white sm:h-20 sm:w-20 dark:ring-slate-800"
             src="/profile.jpg"
             alt="Portrait of Hamed Razizadeh"
           />
@@ -28,7 +28,7 @@ function Header() {
             </NavLink>
 
             <p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">
-              Frontend Developer Student
+              Frontend Developer
             </p>
           </div>
         </div>
@@ -60,7 +60,8 @@ function Header() {
             className="w-fit rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:ring-offset-slate-950"
             type="button"
             onClick={toggleDark}
-            aria-label="Toggle dark mode"
+            aria-label="Dark mode"
+            aria-pressed={dark}
           >
             {dark ? "Light mode" : "Dark mode"}
           </button>

@@ -11,9 +11,10 @@ import { ProjectsPage } from "./pages/ProjectsPage";
 export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-200 via-slate-100 to-blue-200 text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 dark:text-slate-100">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:p-4 focus:text-blue-700">Skip to content</a>
       <Header />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
+      <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-6xl flex-1 px-6 py-12">
         {/*
           Each page has its own ErrorBoundary so if one page crashes,
           only that page shows the fallback message and the rest of the app

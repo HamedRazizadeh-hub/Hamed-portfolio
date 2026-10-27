@@ -1,115 +1,15 @@
-import { useState, type FormEvent, type ChangeEvent } from "react";
-
-function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) {
-    const { name, value } = event.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const newErrors = {
-      name: "",
-      email: "",
-      message: "",
-    };
-
-    if (formData.name.trim() === "") {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formData.email.includes("@")) {
-      newErrors.email = "Email must include @";
-    }
-
-    if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    }
-
-    setErrors(newErrors);
-
-    if (newErrors.name || newErrors.email || newErrors.message) {
-      setSubmitted(false);
-      return;
-    }
-
-    setSubmitted(true);
-
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
-  }
-
+﻿function Contact() {
   return (
-    <section id="contact">
-      <h2>Get in Touch</h2>
-
-      {submitted && <p>Thanks for reaching out! I'll get back to you soon.</p>}
-
-      <form id="contact-form" className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name: *</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          {errors.name && <p>{errors.name}</p>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Email: *</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="message">Message: *</label>
-          <textarea
-            id="message"
-            name="message"
-            rows={7}
-            value={formData.message}
-            onChange={handleChange}
-          ></textarea>
-          {errors.message && <p>{errors.message}</p>}
-        </div>
-
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
+    <div className="mx-auto max-w-3xl space-y-6 rounded-3xl bg-white/85 p-6 text-center shadow-lg ring-1 ring-slate-300 sm:p-8 dark:bg-slate-900 dark:ring-slate-800">
+      <h2 className="text-2xl font-bold">Get in touch</h2>
+      <p className="text-slate-700 dark:text-slate-300">Email me directly or connect with me on LinkedIn.</p>
+      <a className="inline-block max-w-full break-words rounded-2xl bg-brand px-5 py-3 font-semibold text-white hover:bg-blue-700" href="mailto:hamed.razizadeh@gmail.com">hamed.razizadeh@gmail.com</a>
+      <p className="text-sm text-slate-600 dark:text-slate-400">Opens your email app. You can also copy the address above.</p>
+      <div className="flex flex-wrap justify-center gap-6">
+        <a className="font-semibold text-blue-700 underline underline-offset-4 dark:text-blue-300" href="https://www.linkedin.com/in/hamed-razizadeh-5b97304b/">LinkedIn</a>
+        <a className="font-semibold text-blue-700 underline underline-offset-4 dark:text-blue-300" href="https://github.com/HamedRazizadeh-hub">GitHub</a>
+      </div>
+    </div>
   );
 }
-
 export default Contact;

@@ -5,8 +5,8 @@ function About() {
         <h2>About Me</h2>
 
         <p>
-          My name is Hamed Razizadeh. I am learning frontend development and
-          building my skills in HTML, CSS, and JavaScript.
+          My name is Hamed Razizadeh. I am a frontend developer based in Utrecht,
+          the Netherlands, and have completed the HackYourFuture web development program.
         </p>
 
         <p>

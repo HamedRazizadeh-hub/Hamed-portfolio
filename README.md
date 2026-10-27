@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+﻿# Hamed Razizadeh — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My personal portfolio as a Frontend Developer based in Utrecht, the Netherlands.
 
-Currently, two official plugins are available:
+I have completed the HackYourFuture web development program and bring a background in architecture and design. I build responsive interfaces with React and TypeScript, and my current focus also includes Next.js and API integration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**I am seeking junior frontend developer opportunities.**
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Professional introduction, skills, and navigation to projects and contact.
+- Three featured projects: **JobMatch**, **Football Teams Explorer**, and **Cookbook**, with technology details, repository links, demos, and my contributions to team projects.
+- Contact links for email, LinkedIn, and GitHub.
+- Responsive layouts and a light/dark theme toggle.
+- Keyboard focus indicators, skip-to-content navigation, and reduced-motion support.
+- React Router navigation, page titles, page-level error boundaries, and a not-found page.
 
-## Expanding the ESLint configuration
+The email link opens the visitor’s email application. The portfolio does not send or store contact messages.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React
+- TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- React Error Boundary
+- ESLint
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Next.js and other technologies mentioned in the featured projects describe those applications, rather than this portfolio.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run Locally
+
+Clone the repository and install its dependencies:
+
+```bash
+git clone https://github.com/HamedRazizadeh-hub/Hamed-portfolio.git
+cd Hamed-portfolio
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL printed by Vite.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Use a Node.js version supported by the installed Vite version. No environment variables, credentials, or backend are required.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+On Windows PowerShell, use `npm.cmd` if execution policy blocks `npm.ps1`.
+
+## Commands
+
+| Command           | Purpose                                             |
+| ----------------- | --------------------------------------------------- |
+| `npm run dev`     | Start the development server                        |
+| `npm run lint`    | Run ESLint                                          |
+| `npm run build`   | Type-check and create a production build in `dist/` |
+| `npm run preview` | Preview the production build locally                |
+
+There is currently no automated test command.
+
+## Project Structure
+
+```text
+public/                      Static assets
+src/
+  main.tsx                   Application entry point
+  App.tsx                    Shared layout and routes
+  pages/                     Home, projects, contact, and not-found pages
+  components/                Shared UI components
+  data/projects.ts           Project descriptions, contributions, and links
+  context/ThemeContext.tsx   Light/dark theme state
+  hooks/                     Document title hook
+  index.css                  Tailwind entry and accessibility styles
+index.html                   HTML entry and metadata
+vite.config.ts               Vite configuration
+vercel.json                  Client-side routing configuration
 ```
+
+Routes include `/`, `/projects`, and `/contact`. Unknown routes display the not-found page.
+
+The theme resets on reload. The existing Vercel configuration supports direct navigation to client-side routes.
+
+## Preview & Validation
+
+[Portfolio website](https://hamed-portfolio-mu.vercel.app/)
+
+The updated portfolio has been visually checked locally. ESLint and the production build passed.
+
+The published website should be checked again after the updated code is pushed and deployed.
+
+## Contact
+
+- [GitHub](https://github.com/HamedRazizadeh-hub)
+- [LinkedIn](https://www.linkedin.com/in/hamed-razizadeh-5b97304b/)
+- [Email](mailto:hamed.razizadeh@gmail.com)

@@ -5,6 +5,21 @@
 @theme {
   --color-brand: #2563eb;
 }
+
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 4px;
+}
+
+.dark :focus-visible {
+  outline-color: #93c5fd;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
 :root {
   --text: #6b6375;
   --text-h: #08060d;
